@@ -5,5 +5,10 @@ Route::get('/post/create', 'PostsController@create');
 Route::get('/post/{post}', 'PostsController@show');
 Route::post('/posts', 'PostsController@store');
 
+Route::post('/comments/{post}', 'CommentsController@store');
+
+
+
+
 Route::get('/tasks', 'TasksController@index');
 Route::get('/tasks/{task}', 'TasksController@show');
