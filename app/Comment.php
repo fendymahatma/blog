@@ -11,8 +11,13 @@ class Comment extends Model
    //guarded = tidak mau terima masukan data apapun untuk isi fild ini (untuk pengamanan pada fild yang rawan)
    protected $guarded = ['id'];
 
-   public function post()
+   public function posts()
    {
       return $this->belongsTo(Post::class);
+   }
+
+   public function users()
+   {
+      return $this->belongsTo(User::class);
    }
 }
