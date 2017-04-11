@@ -14,19 +14,16 @@ class PostsController extends Controller
 
    public function index()
    {
-      $posts = Post::latest()->filter(request(['month','year']))->get();
+      $posts = Post::latest()->filter(request(['month','year','id']))->get();
+      // $archives = Post::archives();
 
-      $archives = Post::selectRaw('year(created_at) year, monthname(created_at) month, COUNT(*) published')
-         ->groupBy('year','month')
-         ->orderByRaw('min(created_at) desc')
-         ->get()
-         ->toArray();
-
-      return view('posts.index', compact('posts','archives'));
+      return view('posts.index', compact('posts'));
    }
 
    public function show(Post $post)
    {
+      // $archives = Post::archives();
+
       return view('posts.show', compact('post'));
    }
 

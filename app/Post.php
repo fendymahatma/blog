@@ -33,6 +33,10 @@ class Post extends Model
 
    public function scopeFilter($query, $filters)
    {
+      if ($id = $filters['id']) {
+         $query->where('user_id', $id);
+      }
+
       if ($month = $filters['month']) {
          $query->whereMonth('created_at', Carbon::parse($month)->month);
       }
@@ -40,7 +44,15 @@ class Post extends Model
       if ($year = $filters['year']) {
          $query->whereYear('created_at', $year);
       }
-      // dd(request('month'), request('year'));
       $query = $query->get();
+   }
+
+   public static function archives()
+   {
+      return static::selectRaw('year(created_at) year, monthname(created_at) month, COUNT(*) published')
+         ->groupBy('year','month')
+         ->orderByRaw('min(created_at) desc')
+         ->get()
+         ->toArray();
    }
 }
